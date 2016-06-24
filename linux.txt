@@ -1,0 +1,108 @@
+1）在linux环境下，敲入当前目录下的一个唯一文件名称的首字母时，使用Tab键可以自动补齐文件全名，".."表示进入到上一级目录下
+2）查询shell命令下的使用：man shellCommand 
+3）文件目录Shell命令：
+当前工作目录：pwd
+列出当前目录下的所有的文件和子目录：ls
+进入目录：cd（change directory）
+建立一个空目录：mkdir dirName
+建立一个空文件：touch fileName
+生成一个带内容的文件：echo content > fileName，“>”表示重定向读，将文件内容写到fileName的文件中
+查看文件的内容：cat fileName
+拷贝文件：cp sourceFile distFile （copy）
+删除文件：rm fileName（remove）
+剪切：mv sourceFile distFile（move）
+重命名文件：mv fileName renameFileName
+统计单词数目：wc fileName（word count），显示的结果是：行数 单词数 字符数（包括空格）fileName
+查询文件的关键词：grep key fileName
+建立软连接（快捷方式）：ln -s fileName（包含路径） softName（快捷方式，包含路径）
+查询系统的文件：find -name fileName
+注意：建立快捷方式时可能会出现没有权限，创建失败，
+解决方案：sudo ln -s fileName（包含路径） softName（快捷方式，包含路径）
+此时要求输入linux下的用户密码
+删除空目录：rmdir fileName
+删除非空目录（由于非空目录下有子目录和文件，要递归删除），涉及递归操作需要添加一个-r，即
+rm -r  fileName:delete the dir which contains child dir
+rm -f fileName:strongly delete dir
+4）系统管理命令：
+top：相当于在win下查看资源管理器的资源信息（退出当前资源管理，使用Ctrl+C）
+ps -aux：查看静态资源管理器的资源信息
+whoami：查看当前linux的用户
+hostname：查看主机名称
+who：查看当前在线用户
+使用Ctrl+Shift+Alt+F1切换unbuntu的命令行，在当前Alt+F8切换图形化界面
+uname -a：查看Linux的系统内核信息
+在查看内核信息的时候，显示主板本、次版本、小版本；如何看待Linux是否为稳定版在于次版本号是否为偶数
+du：显示指定的文件（目录）已使用的磁盘空间的总量
+df ：显示文件系统磁盘空间的使用情况
+free ：显示当前内存和交换空间的使用情况
+ifconfig： 显示网络接口信息
+ping ：测试网络的连通性
+netstat： 显示网络状态信息
+man ：命令帮助信息查询
+alias ：设置命令别名，即alias [别名]=[“指令名”]
+clear 清屏
+kill 杀死进程
+5）备份压缩命令：
+a、gzip 压缩（解压）文件或目录，压缩文件后缀为gz
+gzip [选项]  压缩（解压缩）的文件名
+选项参数：
+-d 将压缩文件解压。
+-l 对每个压缩文件，显示压缩文件的大小，未压缩文件的大小，压缩比，未压缩文件的名字
+-v 对每一个压缩和解压的文件，显示文件名和压缩比。
+-num 用指定的数字num调整压缩的速度，-1或--fast表示最快压缩方法（低压缩比），-9或--best表示最慢压缩方法（高压缩比）。系统缺省值为6
+压缩：
+gzip fileName.gz  /directory
+查看压缩情况
+gzip -l fileName.gz  
+快速压缩：
+gzip -1 fileName.gz  /directory
+慢速压缩：
+gzip -9 fileName.gz  /directory
+解压：
+gzip -d fileName.gz
+
+b、bzip2 压缩（解压）文件或目录，压缩文件后缀为bz2
+bzip2 [-cdz] 档名
+参数：
+-d ：解压缩的参数
+-z ：压缩的参数
+-num 用指定的数字num调整压缩的速度，-1或--fast表示最快压缩方法（低压缩比），-9或--best表示最慢压缩方法（高压缩比）。系统缺省值为6
+压缩：
+bzip2 fileName.bz2  /directory
+快速压缩：
+bzip2 -1 fileName.bz2  /directory
+慢速压缩：
+bzip2 -9 fileName.bz2  /directory
+解压：
+bzip2 -d fileName.bz2
+
+c、tar 文件、目录打（解）包
+tar [-cxzjvf]   压缩打包文档的名称 欲备份目录
+参数：
+-c ：建立一个归档文件的参数指令
+-x ：解开一个压缩文件的参数指令！
+-z ：是否需要用 gzip 压缩？
+-j ：是否需要用 bzip2 压缩？
+-v ：压缩的过程中显示文件
+-f ：使用档名，在 f 之后要立即接档名
+-tf ：查看归档文件里面的文件
+tar使用：
+i）仅打包，不压缩
+     tar -cvf /home/itcast/familyA.tar /home/itcast/familyA
+ii）打包后，以gzip压缩
+     tar -zcvf /home/itcast/familyA.tar.gz /home/itcast/familyA
+iii）打包后，以bzip2压缩
+     tar -jcvf /home/itcast/familyA.tar.bz2 /home/itcast/familyA
+     # 特别注意，在参数f之后的文件档名是自己取的，我们习惯上都用.tar来作为辨识
+     # 如果加z参数，则以.tar.gz或.tgz来代表gzip压缩过的tar file
+     # 如果加j参数，则以.tar.bz2来作为文档名
+V）gz解压
+     tar -zxvf  /home/itcast/familyA.tar.gz
+IV）bz2解压
+      tar -jxvf  /home/itcast/familyA.tar.gz
+
+6）Linux管道
+简单地说，一个通道接受一个工具软件的输出，然后把那个输出输入到其它工具软件。使用UNIX/Linux的词汇，这个通道接受了一个过程的标准输出，并把这个标准的输出作为另一个过程的标准输入。如果你没有重新定向这个输出，这个输出就在屏幕上显示出来。使用一个通道，你可以重新定向这个输出，这样它就变成了另一个工具软件的标准的输入。
+   例如：grep –r “best” /home/*  | more，即查询home下所有的文件带有best的关键字并以分页的形式显示结果 
+
+
